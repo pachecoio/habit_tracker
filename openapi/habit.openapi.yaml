@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  title: habits.openapi
+  version: '1.0'
+  license:
+    name: MIT
+  contact:
+    name: Thiago Pacheco
+    url: pacheco.io
+    email: hi@pacheco.io
+  description: A simple API to manage Habits
+servers:
+  - url: 'http://localhost:5000'
+paths:
+  /:
+    parameters: []
+    get:
+      summary: List Habits
+      tags:
+        - Habits
+      responses:
+        '200':
+          description: List of Habits
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Habit'
+              examples:
+                Example 1:
+                  value:
+                    - id: 1
+                      description: Learn how to use API-First
+                      user_id: 1
+                      created_at: '2023-01-01 10:00'
+                      updated_at: '2023-01-01 10:00'
+      operationId: habit_tracker.resources.list_habits
+      description: Retrieve the list of habits of a given user
+    post:
+      summary: Create a Habit
+      operationId: habit_tracker.resources.create_habit
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Habit'
+              examples:
+                Example 1:
+                  value:
+                    id: 1
+                    description: Learn how to use API-First
+                    user_id: 1
+                    created_at: '2023-01-01 10:00'
+                    updated_at: '2023-01-01 10:00'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HabitCreate'
+            examples:
+              Example 1:
+                value:
+                  description: Learn how to use API-First
+                  user_id: 1
+        description: ''
+      tags:
+        - Habits
+  '/{habit_id}':
+    parameters:
+      - schema:
+          type: integer
+        name: habit_id
+        in: path
+        required: true
+    get:
+      summary: Get a Habit by ID
+      operationId: habit_tracker.resources.get_habit_by_id
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+      tags:
+        - Habits
+    put:
+      summary: Update a Habit
+      operationId: habit_tracker.resources.update_habit
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Habit'
+        '404':
+          description: Not Found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HabitCreate'
+    delete:
+      summary: Delete a habit
+      operationId: habit_tracker.resources.delete_habit
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+components:
+  schemas:
+    HabitCreate:
+      title: HabitCreate
+      type: object
+      x-examples:
+        Example 1:
+          description: Learn how to use API-First
+          user_id: 1
+      properties:
+        description:
+          type: string
+        user_id:
+          type: integer
+    Habit:
+      title: Habit
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        user_id:
+          type: integer
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      x-examples:
+        Example 1:
+          id: 1
+          description: Learn how to use API-First
+          user_id: 1
+          created_at: '2023-01-01 10:00'
+          updated_at: '2023-01-01 10:00'
