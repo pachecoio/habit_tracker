@@ -2,7 +2,7 @@
 
 This is a sample application to show the benefits of API-First approach using Python and the connexion library.
 
-Follow the tutorial to learn how to build this application.
+Follow the [tutorial](https://dev.to/pacheco/api-first-development-theory-and-practice-571d) to learn how to build this application.
 
 
 # Requirements
